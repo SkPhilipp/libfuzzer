@@ -19,6 +19,10 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
-      - run: dotnet build .
-      - run: dotnet test .
-
+      - name: Build
+        run: |
+          dotnet nuget add source --username USERNAME --password "${GITHUB_TOKEN}" --store-password-in-clear-text --name github-effortgames "https://nuget.pkg.github.com/EffortGames/index.json"
+          dotnet build .
+      - name: Test
+        run: |
+          dotnet test .
