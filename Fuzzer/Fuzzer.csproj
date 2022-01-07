@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageProjectUrl></PackageProjectUrl>
+        <RepositoryUrl>https://github.com/EffortGames/libfuzzer.git</RepositoryUrl>
+        <RootNamespace>Fuzzer</RootNamespace>
+    </PropertyGroup>
+
+</Project>
