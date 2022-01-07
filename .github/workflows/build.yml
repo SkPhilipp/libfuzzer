@@ -1,4 +1,11 @@
-on: [push, pull_request]
+# push a commit or create a pull request to perform a build
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+
 jobs:
   build:
     runs-on: ubuntu-latest
