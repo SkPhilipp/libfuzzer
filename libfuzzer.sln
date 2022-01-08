@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fuzzer", "Fuzzer\Fuzzer.csproj", "{CD7C7086-AF0D-4F48-9C2D-2CED05C325FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fuzzer", "fuzzer\fuzzer.csproj", "{CD7C7086-AF0D-4F48-9C2D-2CED05C325FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fuzzer.Tests", "Fuzzer.Tests\Fuzzer.Tests.csproj", "{266AF4A8-50D7-49D9-902D-7E01813A74AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fuzzer.tests", "fuzzer.tests\fuzzer.tests.csproj", "{266AF4A8-50D7-49D9-902D-7E01813A74AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

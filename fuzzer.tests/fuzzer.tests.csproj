@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Fuzzer\Fuzzer.csproj" />
+      <ProjectReference Include="..\fuzzer\fuzzer.csproj" />
     </ItemGroup>
 
 </Project>

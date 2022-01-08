@@ -30,6 +30,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_SCOPE_PACKAGES }}
           TAG: ${{ github.ref_name }}
         run: |
-          cd Fuzzer
+          cd fuzzer
           dotnet pack . --configuration Release "-p:Version=${TAG}"
           dotnet nuget push "bin/Release/*.nupkg"  --api-key "${GITHUB_TOKEN}" --source "github-effortgames"
