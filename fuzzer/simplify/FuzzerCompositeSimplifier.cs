@@ -7,7 +7,7 @@ namespace Fuzzer.simplify
     /// A IFuzzerSimplifier implementation which provides plans simplified by a delegate simplifier.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerCompositeSimplifier<T> : IFuzzerSimplifier<T> where T : FuzzerContext
+    public class FuzzerCompositeSimplifier<T> : IFuzzerSimplifier<T>
     {
         private readonly List<IFuzzerSimplifier<T>> _delegates;
 

@@ -7,7 +7,7 @@ namespace Fuzzer.core
     /// A FuzzerException captures information of an exception which occurs during a fuzzing iteration.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerException<T> : Exception where T : FuzzerContext
+    public class FuzzerException<T> : Exception
     {
         public readonly FuzzerPlan<T> Plan;
         public readonly T Context;

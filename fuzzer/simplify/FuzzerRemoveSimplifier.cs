@@ -6,7 +6,7 @@ namespace Fuzzer.simplify
     /// A IFuzzerSimplifier implementation which provides plans where a step is removed.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerRemoveSimplifier<T> : FuzzerCursorBasedSimplifier<T> where T : FuzzerContext
+    public class FuzzerRemoveSimplifier<T> : FuzzerCursorBasedSimplifier<T>
     {
         public FuzzerRemoveSimplifier(FuzzerPlan<T> plan) : base(plan)
         {

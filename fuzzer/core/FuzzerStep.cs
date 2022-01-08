@@ -6,7 +6,7 @@ namespace Fuzzer.core
     /// A FuzzerStep represents a single planned interaction on a context.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerStep<T> where T : FuzzerContext
+    public class FuzzerStep<T>
     {
         public readonly FuzzerOperation<T> Operation;
         public readonly double Seed;

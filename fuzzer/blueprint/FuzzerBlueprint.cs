@@ -13,7 +13,7 @@ namespace Fuzzer.blueprint
     /// FuzzerBlueprint is a utility for creating and generating FuzzerPlans.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerBlueprint<T> where T : FuzzerContext
+    public class FuzzerBlueprint<T>
     {
         private readonly List<FuzzerPhase<T>> _phases;
         private Func<FuzzerStep<T>, FuzzerStep<T>> _simplifyOperation;

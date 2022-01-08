@@ -6,7 +6,7 @@ namespace Fuzzer.core
     /// A FuzzerOperation is a named interaction which can be applied on a context.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerOperation<T> where T : FuzzerContext
+    public class FuzzerOperation<T>
     {
         public readonly string Name;
         public readonly Action<T, double> Implementation;

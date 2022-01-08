@@ -6,7 +6,7 @@ namespace Fuzzer.simplify
     /// A FuzzerPlanCursor acts as a descending cursor referring to a step within a phase of a plan.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerPlanCursor<T> where T : FuzzerContext
+    public class FuzzerPlanCursor<T>
     {
         private readonly FuzzerPlan<T> _plan;
         public int CursorPhase { private set; get; }

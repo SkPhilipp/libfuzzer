@@ -6,7 +6,7 @@ namespace Fuzzer.simplify
     /// A IFuzzerSimplifier implementation which provides plans where an operation is replaced by a simplified version.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerReplaceOperationSimplifier<T> : FuzzerCursorBasedSimplifier<T> where T : FuzzerContext
+    public class FuzzerReplaceOperationSimplifier<T> : FuzzerCursorBasedSimplifier<T>
     {
         public FuzzerReplaceOperationSimplifier(FuzzerPlan<T> plan) : base(plan)
         {

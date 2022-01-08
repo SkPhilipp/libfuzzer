@@ -2,10 +2,7 @@
 
 namespace Fuzzer.core
 {
-    /// <summary>
-    /// A FuzzerContext is the target of fuzzer interactions and holds state during a fuzzing iteration.
-    /// </summary>
-    public class FuzzerContext
+    public static class FuzzerUtils
     {
         /// <summary>
         /// Returns an integer that is greater than or equal to 0 and less than the given max value.
@@ -13,7 +10,7 @@ namespace Fuzzer.core
         /// <param name="seed"></param>
         /// <param name="exclusiveLimit"></param>
         /// <returns></returns>
-        protected int SeedToInt(double seed, int exclusiveLimit)
+        public static int SeedToInt(double seed, int exclusiveLimit)
         {
             return Convert.ToInt32(Math.Floor(seed * exclusiveLimit));
         }

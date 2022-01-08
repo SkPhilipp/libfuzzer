@@ -7,7 +7,7 @@ namespace Fuzzer.simplify
     /// A IFuzzerSimplifier implementation which provides plans where a seed is replaced by a simplified version.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerReplaceSeedSimplifier<T> : FuzzerCursorBasedSimplifier<T> where T : FuzzerContext
+    public class FuzzerReplaceSeedSimplifier<T> : FuzzerCursorBasedSimplifier<T>
     {
         public const double DeviationThreshold = 0.0000001;
 

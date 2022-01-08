@@ -2,7 +2,7 @@
 
 namespace Fuzzer.simplify
 {
-    public abstract class FuzzerCursorBasedSimplifier<T> : IFuzzerSimplifier<T> where T : FuzzerContext
+    public abstract class FuzzerCursorBasedSimplifier<T> : IFuzzerSimplifier<T>
     {
         protected readonly FuzzerPlan<T> Plan;
         protected readonly FuzzerPlanCursor<T> PlanCursor;

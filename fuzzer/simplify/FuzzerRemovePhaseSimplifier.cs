@@ -6,7 +6,7 @@ namespace Fuzzer.simplify
     /// A IFuzzerSimplifier implementation which provides plan where already empty phases are removed.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerRemovePhaseSimplifier<T> : IFuzzerSimplifier<T> where T : FuzzerContext
+    public class FuzzerRemovePhaseSimplifier<T> : IFuzzerSimplifier<T>
     {
         private readonly FuzzerPlan<T> _plan;
         private bool _provided;

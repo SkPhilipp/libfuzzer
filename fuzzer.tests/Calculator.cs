@@ -35,7 +35,7 @@ namespace Fuzzer.Tests
         }
     }
 
-    public class CalculatorContext : FuzzerContext
+    public class CalculatorContext
     {
         public readonly Calculator Calculator = new();
     }

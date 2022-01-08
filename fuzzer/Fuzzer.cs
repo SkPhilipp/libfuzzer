@@ -5,7 +5,7 @@ using Fuzzer.simplify;
 
 namespace Fuzzer
 {
-    public class Fuzzer<T> where T : FuzzerContext
+    public class Fuzzer<T>
     {
         private readonly Func<T> _contextBuilder;
 

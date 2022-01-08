@@ -10,7 +10,7 @@ namespace Fuzzer.simplify
     /// produces the same exception, it lowers the complexity of reproducing and locating the exception's cause.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IFuzzerSimplifier<T> where T : FuzzerContext
+    public interface IFuzzerSimplifier<T>
     {
         FuzzerPlan<T> Next();
     }

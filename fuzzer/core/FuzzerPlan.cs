@@ -6,7 +6,7 @@ namespace Fuzzer.core
     /// A FuzzerPlan represents multiple phases of planned interactions on a context.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FuzzerPlan<T> where T : FuzzerContext
+    public class FuzzerPlan<T>
     {
         public readonly List<FuzzerPhase<T>> Phases;
 
