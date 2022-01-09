@@ -1,4 +1,5 @@
-﻿using Fuzzer.core;
+﻿using System;
+using Fuzzer.core;
 using NUnit.Framework;
 
 namespace Fuzzer.Tests
@@ -50,7 +51,6 @@ namespace Fuzzer.Tests
             {
                 Assert.NotNull(e.Context);
                 Assert.AreEqual(1, e.Context.Calculator.Interactions);
-                Assert.AreEqual(0, e.Context.Calculator.Value);
                 Assert.AreEqual(0, e.IndexPhase);
                 Assert.AreEqual(0, e.IndexPhaseStep);
                 Assert.AreEqual(0, e.IndexOperation);

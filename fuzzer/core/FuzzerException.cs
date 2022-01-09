@@ -30,11 +30,8 @@ namespace Fuzzer.core
         {
             get
             {
-                var result = new StringBuilder();
                 var message = InnerException?.Message ?? "Erred";
-                result.Append("\n");
-                result.Append(Plan.ToString(IndexOperation, message));
-                return result.ToString();
+                return Plan.ToString(IndexOperation, message);
             }
         }
     }

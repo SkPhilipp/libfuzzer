@@ -12,15 +12,15 @@ namespace Fuzzer.Tests.core
             var fuzzerPlan = CalculatorBlueprints.MultiPhase(3);
             var calculatorContext = new CalculatorContext();
             var fuzzerExceptionCause = new Exception();
-            var fuzzerException =
-                new FuzzerException<CalculatorContext>(fuzzerPlan, calculatorContext, fuzzerExceptionCause, 1, 3, 3);
+            var fuzzerExceptionIndex = fuzzerPlan.Phases[0].Steps.Count + 1;
+            var fuzzerException = new FuzzerException<CalculatorContext>(fuzzerPlan, calculatorContext, fuzzerExceptionCause, 2, 1, fuzzerExceptionIndex);
 
             var message = fuzzerException.Message;
             Console.WriteLine(message);
             Assert.NotNull(message);
-            Assert.IsTrue(message.Contains("Add"));
-            Assert.IsTrue(message.Contains("Subtract"));
-            Assert.IsTrue(message.Contains("Multiply"));
+            StringAssert.Contains("Add", message);
+            StringAssert.Contains("//", message);
+            StringAssert.Contains("Subtract", message);
         }
     }
 }

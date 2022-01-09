@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Fuzzer.core
 {
@@ -26,8 +27,13 @@ namespace Fuzzer.core
             return copy;
         }
 
+        private string Indented(string code)
+        {
+            return "    " + code.Replace("\n", "\n    ");
+        }
+
         /// <summary>
-        /// Displays all phases as a string, with one particular operation highlighted.
+        /// Displays all phases as a string, with one phase's step preceded by a highlighting message.
         /// </summary>
         /// <param name="highlightIndex"></param>
         /// <param name="highlightMessage"></param>
@@ -36,20 +42,22 @@ namespace Fuzzer.core
         {
             var highlightIndexRelative = highlightIndex;
             var result = new List<string>();
+            result.Add("-------------------------- replay start --------------------------");
+            result.Add("fuzzer.Replay(context => {");
             foreach (var phase in Phases)
             {
                 if (highlightIndexRelative >= 0 && highlightIndexRelative < phase.Steps.Count)
                 {
-                    result.Add(phase.ToString(highlightIndexRelative, highlightMessage));
-                }
-                else
-                {
-                    result.Add(phase.ToString());
+                    result.Add(Indented(phase.ToStringHighlighted(highlightIndexRelative, highlightMessage)));
+                    break;
                 }
 
+                result.Add(Indented(phase.ToString()));
                 highlightIndexRelative -= phase.Steps.Count;
             }
 
+            result.Add("});");
+            result.Add("-------------------------- replay end --------------------------");
             return string.Join("\n", result);
         }
 

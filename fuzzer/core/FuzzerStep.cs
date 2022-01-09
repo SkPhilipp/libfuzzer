@@ -41,7 +41,8 @@ namespace Fuzzer.core
 
         public override string ToString()
         {
-            return $"{Operation.Name}({Seed})";
+            var formatProvider = new System.Globalization.CultureInfo("en-US");
+            return $"context.{Operation.Name}({Seed.ToString(formatProvider)});";
         }
     }
 }

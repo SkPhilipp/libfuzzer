@@ -1,42 +1,76 @@
-# libfuzzer
+# EffortGames libfuzzer
 
-Fuzzing is a technique that is used to find bugs and verify program behavior by generating random inputs and checking if the program behaves as expected.
+EffortGames' libfuzzer is a C# library contains utilities to conveniently automate the fuzzing of C# classes. By fuzzing and checking for behaviour, we can find bugs in old and new code without having to constantly write new tests.
 
-libfuzzer is a library used to automatically test the functionalities of game engine components and  underlying classes. It allows for convenient and mostly automated testing of functionalities of the game engine. In addition, the fuzzer is able to incorporate new functionalities and verify existing behaviour without having to constantly write new tests.
+## What is fuzzing?
 
-Although fuzzing won't necessarily verify the functionality of individual methods or even classes, the fuzzer is able to make assertions on general program behaviour or state; it can ensure a program did not crash otherwise fail, it can apply its inputs to multiple instances of a program or class in parallel and ensure both instances behave the same way. For example, when fuzzing a class that can be serialized and deserialized; it could serialize and deserialize one instance and verify at the end of the fuzzing process that both instances remain equal. This allows for a much more thorough testing of the game engine, than manually written tests can provide, without having to write any tests at all.
+Fuzzing is a technique to find bugs and verify program behaviour by generating random inputs and checking whether the program behaves as expected. When testing a calculator for example, fuzzing it could be as simple as pressing buttons at random and ensuring that it doesn't crash or otherwise fail. You could also apply the same inputs against two separate calculators, and see if they produce the same results. Note that fuzzing does not verify individual functionalities (i.e. does 1 + 1 on the calculator equal 2).
 
-Fuzzing can also be used to determine the performance impact of changes by comparing the performance of fuzzing with the performance of previous versions. Using more complex planning, realistic game state can be simulated allowing for accurate comparison of performance.
+Moreover, fuzzing generates a lot of inputs and may take a long time to complete. You can specify how many iterations the fuzzer should attempt.
 
-### Fuzzer Blueprints
+## Getting started
 
-The Fuzzer generates a plan of random steps to perform based on a concept called "blueprints". Blueprints themselves consist of phases and steps; Phases specify the limits of their steps, steps are the individual functionalities such as method invocations.
-
-When fuzzing a calculator for example, a blueprint could be defined as follows:
+Fuzzing in EffortGames' libfuzzer is performed by specifying a blueprint and passing this to the fuzzer. Blueprints specify which actions a fuzzer can perform, how many and in which order. Using the calculator example, a test could look like this:
 
 ```
-(...)
-  .Phase(0, 10)
-  .Step("Add", (context, seed) => context.Calculator.Add(seed))
-  .Step("Subtract", (context, seed) => context.Calculator.Subtract(seed))
-  .Phase(0, 10)
-  .Step("Multiply", (context, seed) => context.Calculator.Multiply(seed))
-  .Step("Divide", (context, seed) => context.Calculator.Divide(seed))
+[Test]
+public void FuzzCalculator()
+{
+    // specifies a blueprint in which "Add" and "Subtract" may appear 0 to 10 times, followed by "Multiply" or "Divide" once.
+    var blueprint = new FuzzerBlueprint<CalculatorContext>()
+        .Phase(0, 10)
+        .Step("Add", (context, seed) => context.Add(seed))
+        .Step("Subtract", (context, seed) => context.Subtract(seed))
+        .Phase(0, 10)
+        .Step("Multiply", (context, seed) => context.Multiply(seed))
+        .Step("Divide", (context, seed) => context.Divide(seed));
+
+    // the fuzzer is instructed to re-generate and execute a plan 1000 times over, according to the rules of the blueprint.
+    // each plan is performed against a new "CalculatorContext".
+    var fuzzer = new Fuzzer<CalculatorContext>(() => new CalculatorContext());
+    fuzzer.Fuzz(blueprint, 1000);
+}
 ```
 
-This would define a blueprint for a calculator that has two phases, 0 to 10 steps. Plan is generated from this blueprint contain a random amount of steps, where each step is assigned its functionality and a random seed.
+See [./fuzzer.tests/CalculatorFuzzerTests.cs](./fuzzer.tests/CalculatorFuzzerTests.cs) for the complete example.
 
-The allocation of seeds is done when a plan is generated, as the seeds play a role in the process of simplifying plans.
+## Features
 
-### Fuzzer Plan Simplification
+### Replays
 
-Plan simplification is a process that is used to simplify a generated fuzzer plan. Generally, this is only done when a plan is
-known to fail some kind of assertion. In the above example when a plan is generated and executed which causes a division by zero,
-other steps before it are likely not necessary. When debugging a plan which fails an assertion, it is helpful when the plan is
-simplified to see which steps get the assertion to fail.
+When an exception occurs during fuzzing, the fuzzer will re-throw it as a `FuzzerException` which can be printed to displays the error-reproducing plan as C#-ish pseudocode. When provided with the correct naming configuration, these can often be pasted them into your fuzzing test to manually debug why the exception occured. Below is a real (un-simplified) example;
 
-The Fuzzer simplification process removes or modifies steps according to the rules of its plan. In the above example each phase
-allows for 0 to 10 steps; Knowing this, the simplification process could remove steps up to all steps in a phase and verify that
-after removal of a step the simplified plan still fails the assertion. When it does, the process is repeated using this new
-simplified plan until no further simplifications can be applied. The above example could thus be simplified to a single step,
-where only the Divide step remains.
+```c#
+fuzzer.Replay(context => {
+    context.Add(0.9664580677479776);
+    context.Add(0.28429890949479253);
+    context.Subtract(0.5269592267120998);
+    context.Subtract(0.09305505458873467);
+    context.Subtract(0.22555044397038895);
+    context.Subtract(0.22129066438474257);
+    context.Multiply(0.7851263353531838);
+    context.Multiply(0.7049641379643996);
+    context.Multiply(0.27297008562505715);
+    context.Multiply(0.7952038886934537);
+    context.Multiply(0.888432089187406);
+    // Value is no longer a normal number
+    context.Divide(0.2609539936580481);
+});
+```
+
+### Simplification
+
+Continuing with the example above, the fuzzer has found a divide by zero "exception". We known that to divide by zero, only `Divide` is required. `Add`, `Subtract` and `Multiply` are not needed to reproduce it. Plans generated by the fuzzer can be lengthy, and its steps complex. To reduce complexity in debugging, EffortGames' libfuzzer performs simplification out of the box. Simplification reduces a plan known to reproduce an exception to its most minimal form. When applying the simplification to the plan in the previous section's replay, the result is:
+
+```c#
+fuzzer.Replay(context => {
+   // Value is no longer a normal number
+    context.Divide(0);
+});
+```
+
+As is immediately visible, all but one steps were automatically removed as they played no role in the exception occurring. Even the seed was simplified to zero, indicating that the exception is likely reproducible with any value.
+
+By default, simplification will try to remove steps (where allowed by the blueprint's rules) and verify that an exception still occurs. When it does, the process is repeated using this new simplified plan until no further simplifications can be applied. Moreover, seed values can also be simplified (i.e. to zero) to indicate an error likely does not depend on a step's seed.
+
+See [./fuzzer.tests/CalculatorBlueprints.cs](./fuzzer.tests/CalculatorBlueprints.cs) for configuration examples.

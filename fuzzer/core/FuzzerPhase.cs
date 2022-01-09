@@ -31,25 +31,34 @@ namespace Fuzzer.core
         }
 
         /// <summary>
-        /// Displays all phases as a string, with one particular operation highlighted.
+        /// Displays all steps as a string, with one step preceded by a highlighting message.
         /// </summary>
         /// <param name="highlightIndex"></param>
         /// <param name="highlightMessage"></param>
         /// <returns></returns>
-        public string ToString(int highlightIndex, string highlightMessage)
+        public string ToStringHighlighted(int highlightIndex, string highlightMessage)
         {
             var result = new List<string>();
-            for (var i = 0; i < Steps.Count; i++)
+            for (var i = 0; i < highlightIndex; i++)
             {
-                result.Add(i == highlightIndex ? $"{Steps[i]} // <-- {highlightMessage}" : Steps[i].ToString());
+                result.Add(Steps[i].ToString());
             }
+
+            result.Add($"// {highlightMessage}");
+            result.Add(Steps[highlightIndex].ToString());
 
             return string.Join("\n", result);
         }
 
         public override string ToString()
         {
-            return ToString(-1, null);
+            var result = new List<string>();
+            foreach (var step in Steps)
+            {
+                result.Add(step.ToString());
+            }
+
+            return string.Join("\n", result);
         }
     }
 }
