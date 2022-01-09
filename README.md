@@ -1,18 +1,18 @@
 # EffortGames libfuzzer
 
-EffortGames' libfuzzer is a C# library contains utilities to conveniently automate the fuzzing of C# classes. By fuzzing and checking for behaviour, we can find bugs in old and new code without having to constantly write new tests.
+EffortGames' libfuzzer is a C# library containing utilities to conveniently automate the fuzzing of C# classes. By fuzzing and checking for behaviour, we can find bugs in old and new code, cover new branches and functionalities without necessarily having to introduce new tests.
 
 ## What is fuzzing?
 
-Fuzzing is a technique to find bugs and verify program behaviour by generating random inputs and checking whether the program behaves as expected. When testing a calculator for example, fuzzing it could be as simple as pressing buttons at random and ensuring that it doesn't crash or otherwise fail. You could also apply the same inputs against two separate calculators, and see if they produce the same results. Note that fuzzing does not verify individual functionalities (i.e. does 1 + 1 on the calculator equal 2).
+Fuzzing is a technique to find bugs and verify program behaviour by generating random inputs and checking whether the program behaves as expected, commonly after an input or after all inputs. When testing a calculator for example, fuzzing it could be as simple as pressing many buttons at random and ensuring that it doesn't crash or otherwise fail. One could also apply the same inputs against two separate calculators, and verify that if they produce the same results. Do note that tests which apply fuzzing do not usually verify individual functionalities (i.e. checking whether 1 + 1 on a calculator equals 2).
 
-Moreover, fuzzing generates a lot of inputs and may take a long time to complete. You can specify how many iterations the fuzzer should attempt.
+Moreover, fuzzing generates a lot of inputs and may take a long time to complete. You can specify manually how many iterations the fuzzer should attempt.
 
 ## Getting started
 
-Fuzzing in EffortGames' libfuzzer is performed by specifying a blueprint and passing this to the fuzzer. Blueprints specify which actions a fuzzer can perform, how many and in which order. Using the calculator example, a test could look like this:
+Fuzzing in EffortGames' libfuzzer is performed by creatinga blueprint and passing this to the fuzzer. Blueprints specify which actions a fuzzer can perform, how many and in which order. Using the calculator example, a fuzz test could look like this:
 
-```
+```c#
 [Test]
 public void FuzzCalculator()
 {
