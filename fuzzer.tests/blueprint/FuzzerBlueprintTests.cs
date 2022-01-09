@@ -7,7 +7,7 @@ namespace Fuzzer.Tests.blueprint
         [Test]
         public void GenerateMultiPhase()
         {
-            var fuzzerPlan = CalculatorBlueprints.MultiPhase();
+            var fuzzerPlan = CalculatorBlueprints.MultiPhase().Generate();
 
             Assert.AreEqual(3, fuzzerPlan.Phases.Count);
             foreach (var fuzzerPhase in fuzzerPlan.Phases)

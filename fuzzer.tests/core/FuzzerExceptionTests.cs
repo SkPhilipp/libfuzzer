@@ -9,7 +9,7 @@ namespace Fuzzer.Tests.core
         [Test]
         public void Message()
         {
-            var fuzzerPlan = CalculatorBlueprints.MultiPhase(3);
+            var fuzzerPlan = CalculatorBlueprints.MultiPhase(3).Generate();
             var calculatorContext = new CalculatorContext();
             var fuzzerExceptionCause = new Exception();
             var fuzzerExceptionIndex = fuzzerPlan.Phases[0].Steps.Count + 1;

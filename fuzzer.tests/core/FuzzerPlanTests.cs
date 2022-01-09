@@ -7,7 +7,7 @@ namespace Fuzzer.Tests.core
         [Test]
         public void Message()
         {
-            var fuzzerPlan = CalculatorBlueprints.MultiPhase();
+            var fuzzerPlan = CalculatorBlueprints.MultiPhase().Generate();
             var copy = fuzzerPlan.Copy();
 
             Assert.AreEqual(fuzzerPlan.Phases.Count, copy.Phases.Count);

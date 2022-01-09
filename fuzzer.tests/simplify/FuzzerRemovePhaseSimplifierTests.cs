@@ -8,7 +8,7 @@ namespace Fuzzer.Tests.simplify
         [Test]
         public void RemoveMultiplePhases()
         {
-            var fuzzerPlan = CalculatorBlueprints.MultiPhase(0, 0);
+            var fuzzerPlan = CalculatorBlueprints.MultiPhase(0, 0).Generate();
             var fuzzerRemovePhaseSimplifier = new FuzzerRemovePhaseSimplifier<CalculatorContext>(fuzzerPlan);
             fuzzerPlan = fuzzerRemovePhaseSimplifier.Next();
 
@@ -18,7 +18,7 @@ namespace Fuzzer.Tests.simplify
         [Test]
         public void RemoveNothing()
         {
-            var fuzzerPlan = CalculatorBlueprints.MultiPhase();
+            var fuzzerPlan = CalculatorBlueprints.MultiPhase().Generate();
             var fuzzerRemovePhaseSimplifier = new FuzzerRemovePhaseSimplifier<CalculatorContext>(fuzzerPlan);
             fuzzerPlan = fuzzerRemovePhaseSimplifier.Next();
 

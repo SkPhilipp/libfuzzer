@@ -1,9 +1,4 @@
-﻿using System;
-using Fuzzer.blueprint;
-using Fuzzer.core;
-using Fuzzer.simplify;
-
-namespace Fuzzer.Tests
+﻿namespace Fuzzer.Tests
 {
     public class Calculator
     {
@@ -14,40 +9,24 @@ namespace Fuzzer.Tests
         {
             Interactions++;
             Value += value;
-            if (!double.IsFinite(Value))
-            {
-                throw new Exception("This calculator is broken");
-            }
         }
 
         public void Subtract(double value)
         {
             Interactions++;
             Value -= value;
-            if (!double.IsFinite(Value))
-            {
-                throw new Exception("This calculator is broken");
-            }
         }
 
         public void Multiply(double value)
         {
             Interactions++;
             Value *= value;
-            if (!double.IsFinite(Value))
-            {
-                throw new Exception("This calculator is broken");
-            }
         }
 
         public void Divide(double value)
         {
             Interactions++;
             Value /= value;
-            if (!double.IsFinite(Value))
-            {
-                throw new Exception("This calculator is broken");
-            }
         }
     }
 }

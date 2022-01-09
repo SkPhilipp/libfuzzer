@@ -7,7 +7,7 @@ namespace Fuzzer.Tests.simplify
     {
         private static FuzzerPlanCursor<CalculatorContext> FuzzerPlanCursor()
         {
-            var fuzzerPlan = CalculatorBlueprints.MultiPhase(2, 2);
+            var fuzzerPlan = CalculatorBlueprints.MultiPhase(2, 2).Generate();
             var fuzzerPlanCursor = new FuzzerPlanCursor<CalculatorContext>(fuzzerPlan);
             return fuzzerPlanCursor;
         }

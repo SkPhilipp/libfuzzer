@@ -9,7 +9,7 @@ namespace Fuzzer.Tests.simplify
         [Test]
         public void ReplaceSeedAll()
         {
-            var fuzzerPlan = CalculatorBlueprints.MultiPhase();
+            var fuzzerPlan = CalculatorBlueprints.MultiPhase().Generate();
             for (var i = 0; i < 100; i++)
             {
                 var fuzzerSimplifier = new FuzzerReplaceSeedSimplifier<CalculatorContext>(fuzzerPlan);

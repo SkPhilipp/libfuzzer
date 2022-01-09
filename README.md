@@ -16,14 +16,18 @@ Fuzzing in EffortGames' libfuzzer is performed by creatinga blueprint and passin
 [Test]
 public void FuzzCalculator()
 {
-    // specifies a blueprint in which "Add" and "Subtract" may appear 0 to 10 times, followed by "Multiply" or "Divide" once.
+    // specifies a blueprint in which "Add" and "Subtract" may appear 0 to 10 times,
+    //                                 followed by "Multiply" or "Divide" 0 to 10 times,
+    //                                 followed by "AssertFinite" once.
     var blueprint = new FuzzerBlueprint<CalculatorContext>()
         .Phase(0, 10)
         .Step("Add", (context, seed) => context.Add(seed))
         .Step("Subtract", (context, seed) => context.Subtract(seed))
         .Phase(0, 10)
         .Step("Multiply", (context, seed) => context.Multiply(seed))
-        .Step("Divide", (context, seed) => context.Divide(seed));
+        .Step("Divide", (context, seed) => context.Divide(seed))
+        .Phase(1, 1)
+        .Step("AssertFinite", (context, seed) => context.AssertFinite(seed));
 
     // the fuzzer is instructed to re-generate and execute a plan 1000 times over, according to the rules of the blueprint.
     // each plan is performed against a new "CalculatorContext".
@@ -52,9 +56,9 @@ fuzzer.Replay(context => {
     context.Multiply(0.7049641379643996);
     context.Multiply(0.27297008562505715);
     context.Multiply(0.7952038886934537);
-    context.Multiply(0.888432089187406);
-    // Value is no longer a normal number
-    context.Divide(0.2609539936580481);
+    context.Divide(0.35190024708951834);
+    // This calculator is broken
+    context.AssertFinite(0.6865309345007552);
 });
 ```
 
@@ -64,8 +68,10 @@ Continuing with the example above, the fuzzer has found a divide by zero "except
 
 ```c#
 fuzzer.Replay(context => {
-   // Value is no longer a normal number
     context.Divide(0);
+    // This calculator is broken
+    context.AssertFinite(0);
+    
 });
 ```
 

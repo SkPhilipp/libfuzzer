@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Fuzzer.core;
+using Fuzzer.simplify;
 
 namespace Fuzzer.blueprint
 {
@@ -23,15 +24,25 @@ namespace Fuzzer.blueprint
         {
             _phases = new List<FuzzerPhase<T>>();
             _simplifyOperation = null;
-            _simplifySeed = null;
+            _simplifySeed = FuzzerReplaceSeedSimplifier<T>.ZeroSeed;
         }
 
+        /// <summary>
+        /// Applies the given operation simplifier to all steps added after this call.
+        /// </summary>
+        /// <param name="simplifyOperation"></param>
+        /// <returns></returns>
         public FuzzerBlueprint<T> SimplifyingOperations(Func<FuzzerStep<T>, FuzzerStep<T>> simplifyOperation)
         {
             _simplifyOperation = simplifyOperation;
             return this;
         }
 
+        /// <summary>
+        /// Applies the given seed simplifier to all steps added after this call.
+        /// </summary>
+        /// <param name="simplifySeed"></param>
+        /// <returns></returns>
         public FuzzerBlueprint<T> SimplifyingSeeds(Func<FuzzerStep<T>, FuzzerStep<T>> simplifySeed)
         {
             _simplifySeed = simplifySeed;

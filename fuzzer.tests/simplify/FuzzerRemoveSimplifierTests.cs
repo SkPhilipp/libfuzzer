@@ -8,7 +8,7 @@ namespace Fuzzer.Tests.simplify
         [Test]
         public void RemoveAll()
         {
-            var fuzzerPlan = CalculatorBlueprints.MultiPhase(0);
+            var fuzzerPlan = CalculatorBlueprints.MultiPhase(0).Generate();
             for (var i = 0; i < 100; i++)
             {
                 var fuzzerSimplifier = new FuzzerRemoveSimplifier<CalculatorContext>(fuzzerPlan);

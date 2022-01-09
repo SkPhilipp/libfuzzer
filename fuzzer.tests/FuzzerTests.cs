@@ -1,5 +1,4 @@
-﻿using System;
-using Fuzzer.core;
+﻿using Fuzzer.core;
 using NUnit.Framework;
 
 namespace Fuzzer.Tests
@@ -9,7 +8,7 @@ namespace Fuzzer.Tests
         [Test]
         public void FuzzPositive()
         {
-            var fuzzerPlan = CalculatorBlueprints.MultiPhase();
+            var fuzzerPlan = CalculatorBlueprints.MultiPhase().Generate();
             var fuzzer = new Fuzzer<CalculatorContext>(() => new CalculatorContext());
             var calculatorContext = fuzzer.Run(fuzzerPlan);
 
@@ -19,7 +18,7 @@ namespace Fuzzer.Tests
         [Test]
         public void FuzzErring()
         {
-            var fuzzerPlan = CalculatorBlueprints.Erring();
+            var fuzzerPlan = CalculatorBlueprints.Erring().Generate();
             var fuzzer = new Fuzzer<CalculatorContext>(() => new CalculatorContext());
             try
             {
@@ -31,7 +30,7 @@ namespace Fuzzer.Tests
                 Assert.NotNull(e.Context);
                 Assert.Greater(e.Context.Calculator.Interactions, 0);
                 Assert.AreEqual(fuzzerPlan, e.Plan);
-                Assert.AreEqual(3, e.IndexPhase);
+                Assert.AreEqual(4, e.IndexPhase);
                 Assert.AreEqual(0, e.IndexPhaseStep);
                 Assert.AreNotEqual(0, e.IndexOperation);
             }
@@ -40,7 +39,7 @@ namespace Fuzzer.Tests
         [Test]
         public void FuzzErringSimplifying()
         {
-            var fuzzerPlan = CalculatorBlueprints.Erring(0);
+            var fuzzerPlan = CalculatorBlueprints.Erring(0).Generate();
             var fuzzer = new Fuzzer<CalculatorContext>(() => new CalculatorContext());
             try
             {
@@ -51,9 +50,9 @@ namespace Fuzzer.Tests
             {
                 Assert.NotNull(e.Context);
                 Assert.AreEqual(1, e.Context.Calculator.Interactions);
-                Assert.AreEqual(0, e.IndexPhase);
+                Assert.AreEqual(1, e.IndexPhase);
                 Assert.AreEqual(0, e.IndexPhaseStep);
-                Assert.AreEqual(0, e.IndexOperation);
+                Assert.AreEqual(1, e.IndexOperation);
             }
         }
     }

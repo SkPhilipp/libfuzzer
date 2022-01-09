@@ -37,6 +37,7 @@ namespace Fuzzer.simplify
         /// - FuzzerRemoveSimplifier
         /// - FuzzerReplaceOperationSimplifier
         /// - FuzzerReplaceSeedSimplifier
+        /// - FuzzerRemovePhaseSimplifier
         /// </summary>
         /// <returns></returns>
         public static IFuzzerSimplifier<T> BuiltIn(FuzzerPlan<T> plan)
