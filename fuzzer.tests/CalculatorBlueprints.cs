@@ -1,5 +1,4 @@
 ﻿using Fuzzer.blueprint;
-using Fuzzer.core;
 
 namespace Fuzzer.Tests
 {
@@ -28,7 +27,7 @@ namespace Fuzzer.Tests
                 .Phase(1, 1)
                 .Step("Divide", (context, seed) => context.Divide(seed))
                 .Phase(1, 1)
-                .Step("Assert", (context, seed) => context.AssertFinite(seed));
+                .Step("AssertFinite", (context, seed) => context.AssertFinite(seed));
         }
     }
 }
