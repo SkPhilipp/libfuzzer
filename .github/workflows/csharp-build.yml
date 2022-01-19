@@ -1,6 +1,4 @@
-# push a commit or create a pull request to perform a build
-
-name: Build
+name: c# build
 
 on:
   push:
@@ -10,8 +8,6 @@ on:
 
 jobs:
   build:
-    env:
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN_SCOPE_PACKAGES }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,8 +20,10 @@ jobs:
         with:
           dotnet-version: '5.0.x'
       - name: Build
+        env:
+          TOKEN: ${{ secrets.GH_TOKEN_SCOPE_PACKAGES }}
         run: |
-          dotnet nuget add source --username USERNAME --password "${GITHUB_TOKEN}" --store-password-in-clear-text --name github-effortgames "https://nuget.pkg.github.com/EffortGames/index.json"
+          dotnet nuget add source --username USERNAME --password "${TOKEN}" --store-password-in-clear-text --name github-effortgames "https://nuget.pkg.github.com/EffortGames/index.json"
           dotnet build .
       - name: Test
         run: |
