@@ -53,7 +53,7 @@ namespace Fuzzer.blueprint
         {
             if (_phases.Count == 0)
             {
-                throw new Exception("No active Phase");
+                throw new FuzzerBlueprintNoPhaseException();
             }
 
             return _phases[_phases.Count - 1];
